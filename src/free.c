@@ -14,7 +14,7 @@ void move_brk()
 
     for (; tmp_list->_next != NULL ; tmp_list = tmp_list->_next);
     while (tmp_list->size > (long unsigned int)(2 * getpagesize())) {
-        tmp_list -= 2 * getpagesize();
+        tmp_list->size -= 2 * getpagesize();
         brk((void *)(init - (2 * getpagesize())));
         init = sbrk(0);
     }
@@ -33,7 +33,7 @@ void free (void *ptr)
         }
     }
     merge_unused_node(&tmp_list);
-    //move_brk();
+    move_brk();
 }
 
 //merge two unused block
@@ -48,7 +48,6 @@ void merge_unused_node(malloc_t **memory)
             temp->size += temp->_next->size;
             temp->_next = temp->_next->_next;
         } else
-        
             temp = temp->_next;
     }
     (*memory) = temp;
