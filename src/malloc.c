@@ -18,14 +18,12 @@ void *get_ptr(size_t size)
     malloc_t *ptr = NULL;
 
     for (; list != NULL; list = list->_next) {
-        if (list->_status == UNUSED && list->size >= size) {
-            if (list->size == size)
-                return (list);
-            else if (ptr == NULL)
-                ptr = list;
-            else if (list->size < ptr->size)
-                ptr = list;
-        }
+        if (list->_status == UNUSED && list->size == size)
+            return (list);
+        else if (list->_status == UNUSED && list->size >= size && ptr == NULL)
+            ptr = list;
+        else if (list->_status == UNUSED && list->size >= size && list->size < ptr->size)
+            ptr = list;
     }
     return ptr;
 }

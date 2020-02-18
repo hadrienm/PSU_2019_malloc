@@ -7,7 +7,7 @@
 
 #include "../include/malloc.h"
 
-void move_brk()
+void move_brk(void)
 {
     malloc_t *tmp_list = memory_map;
     void *init = sbrk(0);
@@ -42,7 +42,7 @@ void merge_unused_node(malloc_t **memory)
     malloc_t *temp = (*memory);
 
     if (temp == NULL || temp->_next == NULL)
-        return; 
+        return;
     while (temp->_next != NULL) {
         if (temp->_status == UNUSED && temp->_next->_status == UNUSED) {
             temp->size += temp->_next->size;
